@@ -24,8 +24,29 @@
 
 				// Load view
 				$this->view('users/register', $data); //pass data to load form
-
-
 			}
 		}
+		
+		public function login(){  
+				// Check for post
+			if($_SERVER['REQUEST_METHOD'] == 'POST'){
+				// Process form	
+			} else {
+				// Init data 
+				$data =[   //all set to nothing because is blank register form
+					'email' => '',
+					'password' => '',								
+					'email_err' => '',
+					'password_err' => ''					
+				];
+
+				// Load view
+				$this->view('users/login', $data); //pass data to load form
+			}
+		}
+
+
+
+
 	}
+

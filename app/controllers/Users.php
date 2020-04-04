@@ -1,6 +1,7 @@
 <?php
 	class Users extends Controller {
 		public function __construct(){
+			$this->userModel = $this->model('User'); //check model folders for a file user.php
 
 		}
 		//   this method handle two things: loading our form and post
@@ -29,6 +30,11 @@
 				// Validate Email
 				if(empty($data['email'])){
 					$data['email_err'] = 'Please enter email';
+				} else { //else means that did enter someting
+					// Check email
+					if($this->userModel->findUserByEmail($data['email'])){
+						$data['email_err'] = 'Email is already taken';
+					}	
 				}
 
 				// Validate Name

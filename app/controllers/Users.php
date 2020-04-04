@@ -69,7 +69,8 @@
 
 					// Register User
 					if($this->userModel->register($data)){ //when is true we want to rederect to login page
-						redirect('users/login');
+						flash('register_success', 'You are registered and can log in' ); //comes form helper folder and bootstrap.php file //we do not pass a class, we use default class
+						redirect('users/login'); //comes form helper folder and bootstrap.php file
 					} else {
 						die('Something wrong');
 					}

@@ -17,7 +17,7 @@
 		public function view($view, $data =[]){ //pass an array dinamic value //pass data in
 			//Check for view file
 			if(file_exists('../app/views/' .$view .'.php')){ //tikrinam ar toks failas yra
-				require_once '../app/views/' .$view .'.php'; //jei yra uzkraunam
+			  require_once '../app/views/' .$view .'.php'; //jei yra uzkraunam
 			} else {
 			//View does not exist
 			 die('View does not exist');

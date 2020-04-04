@@ -52,7 +52,7 @@
 
 		}
 
-		public function getUrl(){//echo $_GET['url']; gauname infor is url uz klaustuko
+		public function getUrl(){//echo $_GET['url']; gauname info is url uz klaustuko
 			if(isset( $_GET['url'])){ //if(isset( $_GET['url'])) patikrinam ar egzistuoja			
 				$url = rtrim($_GET['url'],'/'); //su sia funkcija iskaido gauta url tarp sleshu
 				$url = filter_var($url, FILTER_SANITIZE_URL); //filter variable in certain ways, we can filter strings, numbers, check URL format

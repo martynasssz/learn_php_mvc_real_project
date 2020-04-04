@@ -60,8 +60,20 @@
 
 				// Make sure errors are apty
 				if(empty($data['email_err']) && empty($data['name_err']) && empty($data['password_err']) && empty($data['confirm_password_err'])) {
-					// Validated
-					die('SUCCESS');
+					
+				// Validated
+					            //die('SUCCESS'); //check if everything is ok
+
+				// Hash Password  // STRON ONE WAY HASHING ALGORYTHM
+				$data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+
+					// Register User
+					if($this->userModel->register($data)){ //when is true we want to rederect to login page
+						redirect('users/login');
+					} else {
+						die('Something wrong');
+					}
+
 				} else {
 					// Load view with erros
 					$this->view('users/register', $data); //load view with data

@@ -25,5 +25,11 @@
 		}
 	}
 
-
-	
+	 function isLoggedIn(){
+				if(isset($_SESSION['users_id'])){
+					return true;
+				} else {
+					return false;
+				}
+			}
+		

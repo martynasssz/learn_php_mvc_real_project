@@ -1,9 +1,13 @@
 <?php
 	class Pages extends Controller { //defautinis controleris
-		public function __construct(){				
+		public function __construct(){							
 		}
 
-		public function index(){ 			
+		public function index(){ 
+			if(isLoggedIn()){
+				redirect('posts');
+			}
+
 			$data = [
 				'title' => 'Shareposts',
 				'description' =>'Siple social network built on the MVC framework'				

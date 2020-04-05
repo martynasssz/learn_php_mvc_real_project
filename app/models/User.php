@@ -21,6 +21,22 @@ class User {
 			return false;
 		}
 	}
+
+	// Login User
+	public function login($email, $password){
+		$this->db->query('SELECT * FROM users WHERE email = :email');
+		$this->db->bind('email', $email);
+
+		$row = $this->db->single(); 
+
+		$hashed_password = $row->password; //found hashed passwords in database 
+		if(password_verify($password, $hashed_password)){//if passwords (real and hashed passwords) match
+			return $row; //when user can login (if match)
+		} else {
+			return false;
+		}  
+	}
+
 	// Find user my email
 	public function findUserByEmail($email) {  //pass email from a controller
 		$this->db->query('SELECT * FROM users WHERE email = :email');

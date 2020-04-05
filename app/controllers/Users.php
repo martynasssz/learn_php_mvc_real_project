@@ -139,7 +139,7 @@
 
 					if($loggedInUser){
 						// Create session
-						die ('SUCCESS');
+						$this->createUserSession($loggedInUser);
 					} else {
 						$data['password_err'] = 'Password incorrect';
 
@@ -163,8 +163,28 @@
 			}
 		}
 
+		public function createUserSession($user){
+			$_SESSION['user_id'] = $user->id;    //create superglobal variable session and set user_id
+			$_SESSION['user_email'] = $user->email;
+			$_SESSION['user_name'] = $user->name;
+			//redirect('posts'); //redirect to post controller
+			redirect('pages/index');
+		}
 
+		public function logout(){
+			unset($_SESSION['user_id']);
+			unset($_SESSION['user_email']);
+			unset($_SESSION['user_name']);
+			session_destroy();
+			redirect('users/login');
+		}
 
-
+		public function isLoggedIn(){
+			if(isset($_SESSION['users_id'])){
+				return true;
+			} else {
+				return false;
+			}
+		}
 	}
 

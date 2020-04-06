@@ -65,14 +65,69 @@
 					'title' => '',
 					'body' =>''
 				];
-			}
 
-			$data = [
-				'title' => '',
-				'body' => ''
-			];
+				$this->view('posts/add', $data);	
+			}			
+		}
 
-			$this->view('posts/add', $data);
+		public function edit($id){
+			if($_SERVER['REQUEST_METHOD']=='POST'){
+
+				// Sanitize POST array
+				$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+				$data = [
+					'id' => $id,
+					'title' => trim($_POST['title']),
+					'body' => trim($_POST['body']),
+					'user_id' => $_SESSION['user_id'],  //user_id comes form a session
+					'title_err' => '',
+					'body_err' =>''
+				];
+
+				// Validate title
+				if(empty($data['title'])){
+					$data['title_err'] = 'Please enter title';
+				}
+
+				// Validate body
+				if(empty($data['body'])){
+					$data['body_err'] = 'Please enter body text';
+				}
+
+				// Make sure no errors
+				if(empty($data['title_err']) && empty($data['body_err'])){//if those things are true
+					// Validated
+					if($this->postModel->updatePost($data)){
+						flash('post_message', 'Post Updated');
+						redirect('posts');
+					} else {
+						die('Somethig went wrong');
+					}
+
+				} else {
+					// Load view with errors
+					$this->view('posts/edit', $data);
+				}
+			
+			} else {
+				// Get existing post from model
+				// fetch post because we don't that post is 
+				$post = $this->postModel->getPostById($id);
+
+				// Check for owner
+				if($post->user_id != $_SESSION['user_id']){
+					//die("success");
+					redirect('posts');									
+				}
+
+				$data = [
+					'id' => $id, //passing id to the view
+					'title' => $post->title,
+					'body' => $post->body
+				];
+
+				$this->view('posts/edit', $data);
+			}			
 		}
 
 		public function show($id){

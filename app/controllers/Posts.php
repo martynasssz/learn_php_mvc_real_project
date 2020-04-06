@@ -7,7 +7,8 @@
 			redirect('users/login');
 		}
 
-		$this->postModel = $this->model('Post'); //Load post model
+		$this->postModel = $this->model('Post'); //Load post model in constructor
+		$this->userModel = $this->model('User'); //Load user model in constructor
 	}
 
 		public function index(){
@@ -72,5 +73,16 @@
 			];
 
 			$this->view('posts/add', $data);
+		}
+
+		public function show($id){
+			$post = $this->postModel->getPostById($id); //pass id for getPostById() function that is comming from url //data from model ($row) in this variable
+			$user = $this->userModel->getUserById($post->user_id); // since we have the post we can access user_id field in the post table
+			$data = [    //$post data stick in this variable
+				'post' => $post,
+				'user' => $user
+			];
+
+			$this->view('posts/show', $data);	
 		}
 	}
